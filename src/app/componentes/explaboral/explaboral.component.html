@@ -1,0 +1,17 @@
+<div class="container p-3 my-5 border" id="explaboral">
+   
+    <div class="row">
+        <div class="col-9">
+            <h2>Experiencia laboral</h2> 
+            <div *ngFor = "let explaboral of explaborales">
+                <h5>{{explaboral.anio_inicio}} {{explaboral.anio_fin}} {{explaboral.lugar}}</h5>
+                <h5>{{explaboral.descripcion}}</h5>
+        
+        <div class="col-3">
+            <i class="bi bi-plus-circle-fill"></i> 
+            <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+        </div>
+            </div>
+    </div>
+    </div>
+</div>

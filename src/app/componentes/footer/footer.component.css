@@ -1,0 +1,11 @@
+.row{
+    background-color:rgb(7, 118, 138);
+}
+
+footer{
+    color:azure;
+    font: size 12px;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+}

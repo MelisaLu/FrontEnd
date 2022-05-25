@@ -1,0 +1,32 @@
+
+
+<div>
+    <app-logo-ap></app-logo-ap>
+
+    <div class="container p-3 my-5 border bg-dark text-white" id="cont_inicio">
+        <div *ngFor= "let persona of personas" >
+        <img src="{{persona.imageUrl}}" class="rounded-circle" id="fotoperfil" alt="Foto perfil Melisa Hermann">
+        <i class="bi bi-pencil-fill"></i>
+        <h1 id="nombre">{{persona.nombre}} {{persona.apellido}}</h1>
+        <h2>{{persona.titulo}}</h2>
+        <button class="btn btn-primary" type="submit">Me interesa</button>
+        <button class="btn btn-primary" type="submit">Añadir sección</button>
+        <button class="btn btn-primary" type="submit">Más</button>
+    </div>
+    </div>
+
+    <div class="container p-3 my-5 border" id="acercademi">
+        <div *ngFor= "let persona of personas" >
+        <div class="row">
+            <div class="col-10">
+                <h2> Acerca de mí</h2>
+            </div>
+            <div class="col-2">
+                <i class="bi bi-pencil-fill"></i>
+            </div>
+        </div>
+        <h5>{{persona.acercademi}} </h5>
+        </div>
+    </div>
+    
+</div>
