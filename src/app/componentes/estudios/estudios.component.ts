@@ -17,16 +17,11 @@ export class EstudiosComponent implements OnInit {
   constructor(private educacionService: EducacionService,
     private authService: AuthService) {}
   
-  ngOnInit(): void {
-   // this.getEducacion();
+  ngOnInit(): any {
+   
     this.isUserLogged = this.authService.isUserLogged();
+    this.getEducacion();
 
-    this.educacionService.getEducacion().subscribe(
-      (data) => {
-        this.educaciones = data;
-        console.log(data);
-      }
-    )
   }
 
 public getEducacion():void
