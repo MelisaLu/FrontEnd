@@ -8,8 +8,10 @@
                 <h5>Argentina Programa</h5>
             
                 <div class="col-2">
-                    <i class="bi bi-plus-circle-fill"></i>
-                    <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+                    <div *ngIf="isUserLogged">
+                        <i class="bi bi-plus-circle-fill"></i>
+                        <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+                    </div>
                 </div>
             </div>
         </div>

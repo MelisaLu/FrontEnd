@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExpLaboral } from './explaboral';
 import { ExpLaboralService } from './explaboral.service';
 import { HttpClient , HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-explaboral',
@@ -10,10 +11,13 @@ import { HttpClient , HttpErrorResponse } from '@angular/common/http';
 })
 export class ExplaboralComponent implements OnInit {
   public explaborales: ExpLaboral[] = [];
+  isUserLogged: Boolean = false;
 
-  constructor(private expLaboralService: ExpLaboralService) {}
+  constructor(private expLaboralService: ExpLaboralService,
+    private authService: AuthService) {}
 
-  ngOnInit() {
+  ngOnInit(): any {
+    this.isUserLogged = this.authService.isUserLogged();
     this.getExpLaboral();
   }
 

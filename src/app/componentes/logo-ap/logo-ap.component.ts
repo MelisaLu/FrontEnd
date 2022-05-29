@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-logo-ap',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./logo-ap.component.css']
 })
 export class LogoAPComponent implements OnInit {
+  isUserLogged: Boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): any {
+    this.isUserLogged = this.authService.isUserLogged();
   }
 
+  public logOut(): void{
+    this.authService.logout();
+    this.isUserLogged = false; 
+    window.location.reload();
+  }
 }

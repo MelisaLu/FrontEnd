@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient , HttpErrorResponse } from '@angular/common/http';
 import { ProyectosService } from './Proyectos.service';
 import { Proyectos } from './Proyectos';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-proy',
@@ -10,9 +11,13 @@ import { Proyectos } from './Proyectos';
 })
 export class ProyComponent implements OnInit {
   public proyectoss: Proyectos[]= [];
-  constructor(private proyectosService: ProyectosService) { }
+  isUserLogged: Boolean = false;
 
-  ngOnInit() {
+  constructor(private proyectosService: ProyectosService,
+    private authService: AuthService) { }
+
+  ngOnInit(): any {
+    this.isUserLogged = this.authService.isUserLogged();
     this.getProyectos();
   }
 

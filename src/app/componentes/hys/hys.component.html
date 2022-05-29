@@ -4,7 +4,9 @@
             <h2>Habilidades</h2>
         </div>
         <div class="col-2">
-            <i class="bi bi-plus-circle-fill"></i>
+            <div *ngIf="isUserLogged">
+                <i class="bi bi-plus-circle-fill"></i>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -24,7 +26,9 @@
           >
                 </circle-progress>
                 <div class="col-2">
-                    <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+                    <div *ngIf="isUserLogged">
+                        <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+                    </div>
                 </div>
             </div>
         </div>

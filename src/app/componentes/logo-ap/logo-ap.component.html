@@ -9,7 +9,13 @@
             <i class="bi bi-facebook"></i>
             <i class="bi bi-github"></i>
             <i class="bi bi-linkedin"></i>
-            <button type="button" class="btn btn-primary float-right" routerLink="/login">Login</button>
+            <div *ngIf="!isUserLogged">
+                <button type="button" class="btn btn-primary float-right" routerLink="/login">Login</button>
+            </div>
+            <div *ngIf="isUserLogged">
+                <button type="button" class="btn btn-primary float-right" (click) = "logOut()">Logout</button>
+            </div>
+          
         </div>
     </div>
 </div>

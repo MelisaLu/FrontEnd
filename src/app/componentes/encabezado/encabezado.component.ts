@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Persona } from './persona';
 import { PersonaService } from './persona.service';
 import { HttpClient , HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -11,10 +12,13 @@ import { HttpClient , HttpErrorResponse } from '@angular/common/http';
 })
 export class EncabezadoComponent implements OnInit {
   public personas:Persona[] = [];
+  isUserLogged: Boolean = false;
 
-  constructor (private personaService: PersonaService){}
+  constructor (private personaService: PersonaService,
+    private authService: AuthService){}
 
-  ngOnInit() {
+  ngOnInit(): any {
+    this.isUserLogged = this.authService.isUserLogged();
     this.getPersonas();
   }
 

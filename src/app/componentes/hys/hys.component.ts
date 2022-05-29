@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Habilidades } from './habilidades';
 import { HabilidadesService } from './habilidades.service';
 import { HttpClient , HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -11,9 +12,13 @@ import { HttpClient , HttpErrorResponse } from '@angular/common/http';
 })
 export class HysComponent implements OnInit {
   public habilidadess: Habilidades []=[];
-  constructor( private habilidadesService: HabilidadesService) { }
+  isUserLogged: Boolean = false;
 
-  ngOnInit(){
+  constructor( private habilidadesService: HabilidadesService,
+    private authService: AuthService) { }
+
+  ngOnInit(): any {
+    this.isUserLogged = this.authService.isUserLogged();
     this.getHabilidades();
 
   }
