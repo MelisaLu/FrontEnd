@@ -6,7 +6,8 @@
     <div class="container p-3 my-5 border bg-dark text-white" id="cont_inicio">
         <div *ngFor= "let persona of personas" >
         <img src="{{persona.imageUrl}}" class="rounded-circle" id="fotoperfil" alt="Foto perfil Melisa Hermann">
-        <i class="bi bi-pencil-fill"></i>
+        
+            <i class="bi bi-pencil-fill"></i>
         <h1 id="nombre">{{persona.nombre}} {{persona.apellido}}</h1>
         <h2>{{persona.titulo}}</h2>
     </div>

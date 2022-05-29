@@ -18,6 +18,10 @@ import { ExpLaboralService } from './componentes/explaboral/explaboral.service';
 import { EducacionService } from './componentes/estudios/educacion.service';
 import { HabilidadesService } from './componentes/hys/habilidades.service';
 import { ProyectosService } from './componentes/proy/Proyectos.service';
+import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PortfolioComponent } from './componentes/portfolio/portfolio.component';
+import { AuthService } from './componentes/auth.service';
 
 
 @NgModule({
@@ -30,19 +34,24 @@ import { ProyectosService } from './componentes/proy/Proyectos.service';
     EstudiosComponent,
     ProyComponent,
     HysComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    PortfolioComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgCircleProgressModule.forRoot({})
   ],
   providers: [PersonaService,
               ExpLaboralService,
               EducacionService,
               HabilidadesService,
-              ProyectosService
+              ProyectosService,
+              AuthService
   ],
   bootstrap: [AppComponent]
 })
