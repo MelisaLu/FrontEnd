@@ -1,16 +1,78 @@
+<div id="education">
+
+<!-- Modal educacion -->
+<div class="modal fade" id="educationForm" tabindex="-1" role="dialog" aria-labelledby="educationFormLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="educationFormLabel">Educación</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="educationForm" (ngSubmit)="onSubmit()">
+          <input type="hidden" name="id" formControlName="id">
+            
+          <div class="row mb-3">
+            <label for="anio_inicio" class="col-sm-2 col-form-label">Año inicio</label>
+            <div class="col-sm-10">
+              <input type="number" name="anio_inicio" formControlName="anio_inicio" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="anio_fin" class="col-sm-2 col-form-label">Año fin</label>
+            <div class="col-sm-10">
+              <input type="number" name="anio_fin" formControlName="anio_fin" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="tipoEdu" class="col-sm-2 col-form-label">Tipo Educacion</label>
+            <div class="col-sm-10">
+              <input type="text" name="tipoEdu" formControlName="tipoEdu" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="institucion" class="col-sm-2 col-form-label">Institución</label>
+            <div class="col-sm-10">
+              <input type="text" name="instit" formControlName="institucion" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="imageUrl" class="col-sm-2 col-form-label">Imagen</label>
+            <div class="col-sm-10">
+              <input type="text" name="img" formControlName="imageUrl" class="form-control" required>
+            </div>
+          </div>
+
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary me-4" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="container p-3 my-5 border" id="estudios">
     <div class="row">
         <div class="col-10">
             <h2>Educación</h2>
         </div>
         <div class="col-2">
-            <div *ngIf="isUserLogged">
-            <i class="bi bi-plus-circle-fill"></i>
+            <div *ngIf="isUserLogged" class="btn-edit">
+                <button class="btn btn-right" data-bs-toggle="modal" data-bs-target="#educationForm" (click)="onNewEducation()"><i class="bi bi-plus-circle-fill"></i></button>
             </div>
         </div>
     </div>
 
-    <div *ngFor = "let educacion of educaciones">
+    <div *ngFor = "let educacion of educaciones; let i = index ">
         <div class="row">
             <div class="col-2">
                 <img src="{{educacion.imageUrl}}">
@@ -21,11 +83,22 @@
                 
             </div>
             <div class="col-2">
-                <div *ngIf="isUserLogged">
-                    <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+                <div *ngIf="isUserLogged" class="data-control">
+                    <div class="btn-edit">
+                        
+                        <button class="btn btn-right" data-bs-toggle="modal" data-bs-target="#educationForm" (click)="onEditEducation(i)"><i class="bi bi-pencil-fill"></i></button>
+                      
+                      </div>
+                      <div class="btn-edit">
+                    
+                        <button class="btn btn-right" (click)="onDeleteEducation(i)"><i class="bi bi-trash-fill"></i></button>
+                        
+                      </div>
+
                 </div>
             </div>
         </div>
     </div>
 
+</div>
 </div>
