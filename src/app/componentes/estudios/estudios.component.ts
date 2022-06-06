@@ -75,6 +75,7 @@ private clearForm(){
 
 onSubmit(){
   let educacion: Educacion = this.educationForm.value;
+  console.log(this.educationForm.value);
   if (this.educationForm.get('id')?.value ==''){
   this.educacionService.addEducacion(educacion).subscribe(
     (newEducacion: Educacion) => {
@@ -82,6 +83,7 @@ onSubmit(){
     }
   );
   }else { 
+    console.log(this.educationForm.value);
     this.educacionService.updateEducacion(educacion).subscribe(
       () =>{
         this.reloadData();

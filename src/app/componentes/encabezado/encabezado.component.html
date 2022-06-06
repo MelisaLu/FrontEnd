@@ -3,14 +3,70 @@
 <div>
     <app-logo-ap></app-logo-ap>
 
-    <div class="container p-3 my-5 border bg-dark text-white" id="cont_inicio">
+    <!--Edit Persona modal -->
+    <div class="modal fade" id="updatePersonaModal" tabindex="-1" role="dialog" aria-labelledby="updatePersonaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updatePersonaModalLabel">Actualizar datos personales</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times</span> 
+                </button>
+            </div>
+            <div class="modal-body">
+              <form #editForm = "ngForm">
+                <div class="form-group">
+                <input type="hidden" name="=id" ngModel="{{editPersona?.id}}">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" ngModel="{{editPersona?.nombre}}" name="nombre" class="form-control" id="nombre" placeholder="Nombre" aria-describedby="emailHelp" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" ngModel="{{editPersona?.apellido}}" name="apellido" class="form-control" id="apellido" placeholder="Apellido" aria-describedby="emailHelpApellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" ngModel="{{editPersona?.titulo}}" name="titulo" class="form-control" id="titulo" placeholder="Titulo" aria-describedby="emailHelpTitulo" required>
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl">Url Imagen</label>
+                    <input type="text" ngModel="{{editPersona?.imageUrl}}"  name="imageUrl" class="form-control" id="imageUrl" placeholder="Url Imagen" aria-describedby="emailHelpAUrlImage" required>
+                </div>
+                <div class="form-group">
+                    <label for="acercademi">Acerca de mi</label>
+                    <input type="text" ngModel="{{editPersona?.acercademi}}" name="acercademi" class="form-control" id="titulo" placeholder="Acerca de mi" aria-describedby="emailHelpAcercademi" required>
+                </div>
+
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+              <button (click)="onUpdatePersona(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+            <!--
+            <div class="modal-footer">
+              <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+              <button (click)="onUpdatePersona(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+            </div>-->
+
+          </div>
+        </div>
+      </div>
+    <!-- hasta aca es el modal de update-->
+
+    <div class="container p-3 my-5 border bg-secondary text-white" id="cont_inicio">
         <div *ngFor= "let persona of personas" >
         <img src="{{persona.imageUrl}}" class="rounded-circle" id="fotoperfil" alt="Foto perfil Melisa Hermann">
-            <div *ngIf="isUserLogged">
-                <i class="bi bi-pencil-fill"></i>
+        <div class="row">
+            <div class="col-10">
+                <h1 id="nombre">{{persona.nombre}} {{persona.apellido}}</h1>
+                <h2>{{persona.titulo}}</h2>
             </div>
-        <h1 id="nombre">{{persona.nombre}} {{persona.apellido}}</h1>
-        <h2>{{persona.titulo}}</h2>
+            <div class="col-2">
+                <div *ngIf="isUserLogged">
+                    <button class="btn btn-right" (click)="onOpenModal(persona,'edit')"><i class="bi bi-pencil-fill"></i></button>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
 
@@ -21,9 +77,7 @@
                 <h2> Acerca de mí</h2>
             </div>
             <div class="col-2">
-                <div *ngIf="isUserLogged">
-                    <i class="bi bi-pencil-fill"></i>
-                </div>
+              
             </div>
         </div>
         <h5>{{persona.acercademi}} </h5>

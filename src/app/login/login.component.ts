@@ -9,8 +9,7 @@ import { AuthService } from '../componentes/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
- // usuario:string="";
- //password:string="";
+
 
   form: FormGroup;
   loginError: Boolean = false;
