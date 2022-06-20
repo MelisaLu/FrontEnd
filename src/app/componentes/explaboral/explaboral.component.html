@@ -1,19 +1,139 @@
-<div class="container p-3 my-5 border" id="explaboral">
-   
-    <div class="row">
-        <div class="col-9">
-            <h2>Experiencia laboral</h2> 
-            <div *ngFor = "let explaboral of explaborales">
-                <h5>{{explaboral.anio_inicio}} - {{explaboral.anio_fin}} {{explaboral.lugar}}</h5>
-                <h5>{{explaboral.descripcion}}</h5>
+<div>
+
+    <!--Add ExpLaboral modal -->
+    <div class="modal fade" id="addExpLaboralModal" tabindex="-1" role="dialog" aria-labelledby="addExpLaboralModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addExpLaboralModalLabel">Agregar experiencia laboral</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label = "Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #addForm = "ngForm" (ngSubmit)="onAddExpLaboral(addForm)">
+              <div class="form-group">
+                <label for = "anio_inicio">Año inicio</label>
+                <input type = "number" ngModel name = "anio_inicio" 
+                class = "form-control" id="anio_inicio" placeholder = "anio_inicio" required>
+              </div>
+              
+              <div class="form-group">
+                  <label for="anio_fin">Año fin</label>
+                  <input type="number" ngModel name="anio_fin"
+                   class = "form-control" id ="anio_fin" placeholder = "anio_fin" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="lugar">Lugar</label>
+                  <input type="text" ngModel name="lugar" 
+                  class="form-control" id="lugar" placeholder="Lugar" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="descripcion">Descripcion</label>
+                  <input type="text" ngModel name="descripcion" 
+                  class="form-control" id="descripcion" placeholder="Descripcion" required>
+              </div>
+             
+              <button type="button" id="add-explaboral-form" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+            <button [disabled]="addForm.invalid" type = "submit" class="btn btn-primary">Guardar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- hasta aca es el modal de add -->
+
+    <!--Update ExpLaboral modal -->
+    <div class="modal fade" id="updateExpLaboralModal" tabindex="-1" role="dialog" aria-labelledby="updateExpLaboralModalLabel" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateExpLaboralModalLabel">Modificar experiencia laboral {{editExpLaboral?.lugar}}</h5>
+              <button type="button" class="close" data-dismiss="modal" >X</button>
+            </div>
+            <div class="modal-body">
+              <form #editForm = "ngForm">
+                <div class="form-group">
+                <input type="hidden" name="id" ngModel="{{editExpLaboral?.id}}">
+                  <label for="anio_inicio">Año inicio</label>
+                  <input type="number" ngModel="{{editExpLaboral?.anio_inicio}}" name="anio_inicio" class="form-control" id="anio_inicio" placeholder="anio_inicio" aria-describedby="mailHelpAnioInicio" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="anio_fin">Año fin</label>
+                    <input type="number" ngModel="{{editExpLaboral?.anio_fin}}" name="anio_fin" class="form-control" id="anio_fin" placeholder="anio_fin" aria-describedby="emailHelpAnioFin" required>
+                </div>
+                <div class="form-group">
+                    <label for="lugar">Lugar</label>
+                    <input type="text" ngModel="{{editExpLaboral?.lugar}}" name="lugar" class="form-control" id="lugar" placeholder="Lugar" aria-describedby="emailHelpLugar" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripcion</label>
+                    <input type="text" ngModel="{{editExpLaboral?.descripcion}}"  name="descripcion" class="form-control" id="descripcion" placeholder="Descripcion" aria-describedby="emailHelpDescripcion" required>
+                </div>
+               
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+              <button (click)="onUpdateExpLaboral(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- hasta aca es el modal de update-->
+
+    <!--Delete ExpLaboral modal -->
+    <div class="modal fade" id="deleteExpLaboralModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpLaboralModalLabel" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteExpLaboralModalLabel">Eliminar experiencia laboral</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label = "Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <p>Está seguro de eliminar la experiencia laboral {{deleteExpLaboral?.lugar}} ? </p>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">No</button>
+                <button (click)="onDeleteExpLaboral(deleteExpLaboral?.id)" class="btn btn-danger" data-dismiss="modal">Si</button>
+              </div>
+          </div>
         
-        <div class="col-3">
+        </div>
+      </div>
+    </div>
+    <!-- hasta aca es el modal delete-->
+
+
+    <div class="container p-3 my-5 border" id="explaboralcontainer">
+        <div class=row>
+          <div class="col-9">
+            <h2>Experiencia laboral</h2>
+          </div>
+          <div class="col-2">
             <div *ngIf="isUserLogged">
-                <i class="bi bi-plus-circle-fill"></i> 
-                <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+              <button class="btn btn-right" (click)="onOpenModal(null,'add')"><i class="bi bi-plus-circle-fill"></i></button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div *ngFor = "let explaboral of explaborales">
+                <div class="col-8">
+                  <h5> * {{explaboral.anio_inicio}} - {{explaboral.anio_fin}} {{explaboral.lugar}}</h5>
+                  <h5>{{explaboral.descripcion}}</h5>
+                </div>
+                <div class="col-2">
+                    <div *ngIf="isUserLogged">
+                    <button (click)="onOpenModal(explaboral,'edit')" class="btn btn-right" ><i class="bi bi-pencil-fill"></i></button>
+                    <button (click)="onOpenModal(explaboral,'delete')" class="btn btn-right" ><i class="bi bi-trash-fill"></i></button>
+                    </div>
+                </div>
+                
             </div>
         </div>
-            </div>
     </div>
     </div>
+
 </div>

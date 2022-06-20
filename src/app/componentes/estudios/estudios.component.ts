@@ -3,7 +3,7 @@ import { EducacionService } from './educacion.service';
 import { HttpClient , HttpErrorResponse } from '@angular/common/http';
 import { Educacion } from './educacion';
 import { AuthService } from '../auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-estudios',
@@ -13,43 +13,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class EstudiosComponent implements OnInit {
   public educaciones: Educacion[] = [];
   isUserLogged: Boolean = false;
-
-  educationForm: FormGroup;
-
-  
+  public editEducacion: Educacion;
+  public deleteEducacion: Educacion;
+ 
   constructor(private educacionService: EducacionService,
-    private authService: AuthService,
-    private formBuilder: FormBuilder) {
-      this.educationForm = this.formBuilder.group({
-          id:[''],
-          anio_inicio:['', [Validators.required]],
-          anio_fin:['', [Validators.required]],
-          tipoEdu:['',[Validators.required]],
-          institucion:['',[Validators.required]],
-          imageUrl:['',[Validators.required]]
-        })
-
-    }
+    private authService: AuthService) {}
   
   ngOnInit(): any {
    
     this.isUserLogged = this.authService.isUserLogged();
     this.getEducacion();
-
-    this.reloadData();
   }
 
-private reloadData(){
-  this.educacionService.getEducacion().subscribe(
-    (data) =>{
-      this.educaciones = data;
-      console.log(data);
-    }
-  );
-}
-
-public getEducacion():void
-{
+public getEducacion():void{
   this.educacionService.getEducacion().subscribe(
     (response: Educacion[])=>{
       this.educaciones = response;
@@ -58,71 +34,68 @@ public getEducacion():void
       alert(error.message);
     }
   );
-
 }
 
-private clearForm(){
-  this.educationForm.setValue({
-    id: '',
-    anio_inicio :0,
-    anio_fin : 0,
-    tipoEdu: '',
-    institucion: '',
-    imageUrl: '',
+public onOpenModal(educacion: Educacion, mode: string): void {
+  const container = document.getElementById('estudioscontainer')
+  const button = document.createElement('button');
+  button.type ='button';
+  button.style.display = 'none';
+  button.setAttribute('data-toggle', 'modal');
+  if (mode === 'add'){
+    button.setAttribute('data-target', '#addEducacionModal');
+  }
+  if (mode === 'edit'){
+    this.editEducacion = educacion;
+    button.setAttribute('data-target', '#updateEducacionModal');
+  }
+  if (mode === 'delete'){
+    this.deleteEducacion = educacion;
+    button.setAttribute('data-target', '#deleteEducacionModal');
+  }
+  container.appendChild(button);
+  button.click();
 
-  })
+}
+public onAddEducacion(addForm: NgForm): void{
+  document.getElementById('add-educacion-form').click();
+  this.educacionService.addEducacion(addForm.value).subscribe(
+    (response: Educacion) => {
+      console.log(response);
+      this.getEducacion();
+      addForm.reset();
+    },
+    (error: HttpErrorResponse) => {
+      alert(error.message);
+    }
+  )
 }
 
-onSubmit(){
-  let educacion: Educacion = this.educationForm.value;
-  console.log(this.educationForm.value);
-  if (this.educationForm.get('id')?.value ==''){
-  this.educacionService.addEducacion(educacion).subscribe(
-    (newEducacion: Educacion) => {
-      this.educaciones.push(newEducacion);
+public onUpdateEducacion(educacion: Educacion): void{
+
+  this.educacionService.updateEducacion(educacion).subscribe(
+    (response: Educacion) =>{
+      console.log(response);
+      this.getEducacion();
+    },
+    (error: HttpErrorResponse) =>{
+      alert(error.message);
     }
   );
-  }else { 
-    console.log(this.educationForm.value);
-    this.educacionService.updateEducacion(educacion).subscribe(
-      () =>{
-        this.reloadData();
-      }
-    )
-  }
+
 }
 
 
-onNewEducation(){
-  this.clearForm();
-}
-
-private loadForm(educacion: Educacion){
-  this.educationForm.setValue({
-    id: educacion.id,
-    anio_inicio : educacion.anio_inicio,
-    anio_fin : educacion.anio_fin,
-    tipoEdu: educacion.tipoEdu,
-    institucion: educacion.institucion,
-    imageUrl: educacion.imageUrl,
-
-  })
-}
-
-onEditEducation(index : number){
-  let educacion: Educacion = this.educaciones[index];
-  this.loadForm(educacion);
-}
-
-onDeleteEducation(index : number){
-  let educacion: Educacion = this.educaciones[index];
-  if (confirm("¿Está seguro que desea borrar la educación seleccionada?")) {
-    this.educacionService.deleteEducacion(educacion.id).subscribe(
-      () => {
-        this.reloadData();
-      }
-    )
-  }
+public onDeleteEducacion(educacionId: number):void{
+  this.educacionService.deleteEducacion(educacionId).subscribe(
+    (response: void) =>{
+      console.log(response);
+      this.getEducacion();
+    },
+    (error: HttpErrorResponse) =>{
+      alert(error.message);
+    }
+  );
 }
 
 

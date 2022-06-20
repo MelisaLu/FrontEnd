@@ -1,19 +1,129 @@
-   <div class="container p-3 my-5 border" id="proy">
+<div>  
+       <!--Add Proyecto modal -->
+       <div class="modal fade" id="addProyectoModal" tabindex="-1" role="dialog" aria-labelledby="addProyectoModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addProyectoModalLabel">Agregar nuevo Proyecto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label = "Cerrar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #addForm = "ngForm" (ngSubmit)="onAddProyecto(addForm)">
+                <div class="form-group">
+                  <label for = "nombreProy">Nombre proyecto</label>
+                  <input type = "text" ngModel name = "nombreProy" 
+                  class = "form-control" id="nombreProy" placeholder = "nombre proyecto" required>
+                </div>
+              
+                <div class="form-group">
+                    <label for="descripcionProy">Descripción Proyecto </label>
+                    <input type="text" ngModel name="descripcionProy" 
+                    class="form-control" id="descripcionProy" placeholder="descripcion proyecto" required>
+                </div>
+  
+                <button type="button" id="add-proyecto-form" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+              <button [disabled]="addForm.invalid" type = "submit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- hasta aca es el modal de add -->
+
+
+    <!--Update Proyecto modal -->
+    <div class="modal fade" id="updateProyectoModal" tabindex="-1" role="dialog" aria-labelledby="updateProyectoModalLabel" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateProyectoModalLabel">Modificar proyecto {{editProyecto?.nombreProy}}</h5>
+              <button type="button" class="close" data-dismiss="modal" >X</button>
+            </div>
+            <div class="modal-body">
+              <form #editForm = "ngForm">
+                <div class="form-group">
+                <input type="hidden" name="id" ngModel="{{editProyecto?.id}}">
+                  
+                    <label for="nombreProy">Nombre Proyecto</label>
+                  <input type="text" ngModel="{{editProyecto?.nombreProy}}" name="nombreProy" 
+                  class="form-control" id="nombreProy" placeholder="nombre proyecto" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="descripcionProy">Descripción del poryecto</label>
+                    <input type="descripcionProy" ngModel="{{editProyecto?.descripcionProy}}" name="descripcionProy" 
+                    class="form-control" id="descripcionProy" placeholder="descripcion proyecto" required>
+                </div>
+              
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+              <button (click)="onUpdateProyecto(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- hasta aca es el modal de update-->
+  
+      <!--Delete Proyecto modal -->
+      <div class="modal fade" id="deleteProyectoModal" tabindex="-1" role="dialog" aria-labelledby="deleteProyectoModalLabel" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteProyectoModal">Eliminar proyecto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label = "Cerrar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>Está seguro de eliminar la educación {{deleteProyecto?.nombreProy}} ? </p>
+                <div class="modal-footer">
+                  <button type="button" data-dismiss="modal" class="btn btn-secondary">No</button>
+                  <button (click)="onDeleteProyecto(deleteProyecto?.id)" class="btn btn-danger" data-dismiss="modal">Si</button>
+                </div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+      
+  
+      <!-- hasta aca es el modal delete-->
+
+
+
+
+
+
+   <div class="container p-3 my-5 border" id="proycontainer">
     
     <div class="row">
         <div class="col-10">
             <h2>Proyectos</h2> 
-            <div *ngFor = "let proyectos of proyectoss">
-                <h5>2022. Portfolio web. Proyecto integrador de #YoProgramo.</h5>
-                <h5>Argentina Programa</h5>
+        </div>
+        <div class="col-2">
+            <div *ngIf="isUserLogged">
+                <button class="btn btn-right" (click)="onOpenModal(null,'add')"><i class="bi bi-plus-circle-fill"></i></button> 
+            </div>
+        </div>
+    </div>   
+
+        <div class="row">
             
+            <div *ngFor = "let proyectos of proyectoss">
+                <div class="col-10">
+                    <h5> * {{proyectos.nombreProy}}</h5>
+                    <h5>{{proyectos.descripcionProy}}</h5>
+                </div>
                 <div class="col-2">
                     <div *ngIf="isUserLogged">
-                        <i class="bi bi-plus-circle-fill"></i>
-                        <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+                        <button (click)="onOpenModal(proyectos,'edit')" class="btn btn-right"><i class="bi bi-pencil-fill"></i></button>
+                        <button (click)="onOpenModal(proyectos,'delete')" class="btn btn-right"><i class="bi bi-trash-fill"></i></button>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
+        
+        </div>   
     </div>
+</div> 

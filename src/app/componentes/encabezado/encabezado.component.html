@@ -4,19 +4,17 @@
     <app-logo-ap></app-logo-ap>
 
     <!--Edit Persona modal -->
-    <div class="modal fade" id="updatePersonaModal" tabindex="-1" role="dialog" aria-labelledby="updatePersonaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updatePersonaModal" tabindex="-1" role="dialog" aria-labelledby="updatePersonaModalLabel" >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="updatePersonaModalLabel">Actualizar datos personales</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times</span> 
-                </button>
+              <button type="button" class="close" data-dismiss="modal" >X</button>
             </div>
             <div class="modal-body">
               <form #editForm = "ngForm">
                 <div class="form-group">
-                <input type="hidden" name="=id" ngModel="{{editPersona?.id}}">
+                <input type="hidden" name="id" ngModel="{{editPersona?.id}}">
                   <label for="nombre">Nombre</label>
                   <input type="text" ngModel="{{editPersona?.nombre}}" name="nombre" class="form-control" id="nombre" placeholder="Nombre" aria-describedby="emailHelp" required>
                 </div>

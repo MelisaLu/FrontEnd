@@ -1,11 +1,104 @@
-<div class="container p-3 my-5 border" id="habilidades">
+<div>
+    <!--Add Habilidad modal -->
+    <div class="modal fade" id="addHabilidadModal" tabindex="-1" role="dialog" aria-labelledby="addHabilidadModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addHabilidadModalLabel">Agregar nueva habilidad</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label = "Cerrar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #addForm = "ngForm" (ngSubmit)="onAddHabilidad(addForm)">
+                <div class="form-group">
+                  <label for = "habilidad">Habilidad</label>
+                  <input type = "text" ngModel name = "habilidad" 
+                  class = "form-control" id="habilidad" placeholder = "habilidad" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="porcentaje">Tipo educación</label>
+                    <input type="number" ngModel name="porcentaje" 
+                    class="form-control" id="porcentaje" placeholder="porcentaje" required>
+                </div>
+  
+                <button type="button" id="add-habilidad-form" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+              <button [disabled]="addForm.invalid" type = "submit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- hasta aca es el modal de add -->
+  
+      <!--Update Habilidad modal -->
+      <div class="modal fade" id="updateHabilidadModal" tabindex="-1" role="dialog" aria-labelledby="updateHabilidadModalLabel" >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="updateHabilidadModalLabel">Modificar habilidad {{editHabilidad?.habilidad}}</h5>
+                <button type="button" class="close" data-dismiss="modal" >X</button>
+              </div>
+              <div class="modal-body">
+                <form #editForm = "ngForm">
+                  <div class="form-group">
+                  <input type="hidden" name="id" ngModel="{{editHabilidad?.id}}">
+                    <label for="habilidad">Habilidad</label>
+                    <input type="text" ngModel="{{editHabilidad?.habilidad}}" name="habilidad" 
+                    class="form-control" id="habilidad" placeholder="habilidad" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="porcentaje">Porcentaje</label>
+                      <input type="number" ngModel="{{editHabilidad?.porcentaje}}" name="porcentaje" 
+                      class="form-control" id="porcentaje" placeholder="porcentaje" required>
+                  </div>
+              
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" >Cerrar</button>
+                <button (click)="onUpdateHabilidad(editForm.value)" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- hasta aca es el modal de update-->
+  
+      <!--Delete Habilidad modal -->
+      <div class="modal fade" id="deleteHabilidadModal" tabindex="-1" role="dialog" aria-labelledby="deleteHabilidadModalLabel" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteHabilidadModal">Eliminar Habilidad</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label = "Cerrar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>Está seguro de eliminar la habilidad {{deleteHabilidad?.habilidad}} {{deleteHabilidad?.porcentaje}} % ? </p>
+                <div class="modal-footer">
+                  <button type="button" data-dismiss="modal" class="btn btn-secondary">No</button>
+                  <button (click)="onDeleteHabilidad(deleteHabilidad?.id)" class="btn btn-danger" data-dismiss="modal">Si</button>
+                </div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+      
+  
+      <!-- hasta aca es el modal delete-->
+
+
+
+<div class="container p-3 my-5 border" id="habilidadescontainer">
     <div class="row">
         <div class="col-10">
             <h2>Habilidades</h2>
         </div>
         <div class="col-2">
             <div *ngIf="isUserLogged">
-                <i class="bi bi-plus-circle-fill"></i>
+                <button class="btn btn-right" (click)="onOpenModal(null,'add')"><i class="bi bi-plus-circle-fill"></i></button>
             </div>
         </div>
     </div>
@@ -27,10 +120,14 @@
                 </circle-progress>
                 <div class="col-2">
                     <div *ngIf="isUserLogged">
-                        <i class="bi bi-pencil-fill"></i> <i class="bi bi-trash-fill"></i>
+                        <button (click)="onOpenModal(habilidades,'edit')" class="btn btn-right"><i class="bi bi-pencil-fill"></i></button>
+                        <button (click)="onOpenModal(habilidades,'delete')" class="btn btn-right"><i class="bi bi-trash-fill"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
 </div>
