@@ -1,3 +1,3 @@
 export const config = {
-    baseUrl: "https://apportfoliomelisa.herokuapp.com"
+    baseUrl: "https://apportfoliomelisa.herokuapp.com/"
 }
